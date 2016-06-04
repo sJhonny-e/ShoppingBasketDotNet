@@ -30,7 +30,7 @@ namespace ShoppingBasketDotNet.Models
             return this;
         }
 
-        public KeyValuePair<Item,int> GetItem(int id)
+        public virtual KeyValuePair<Item,int> GetItem(int id)
         {
             return _items.FirstOrDefault(pair => pair.Key.Id == id);
         }
