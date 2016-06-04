@@ -57,5 +57,25 @@ namespace ShoppingBasketDotNet.Tests.Models
             var total = basket.Add(_cinnamonBubka, 10).CalculateTotal();
             Assert.AreEqual(3.0, total); 
         }
+
+        [Test]
+        public void GetItem_WhenItemExists_ReturnsItemWithQuantity()
+        {
+            var basket = new ShoppingBasket(new IDiscount[] { });
+            var item = basket.Add(_chocolateBubka, 3)
+                .GetItem(_chocolateBubka.Id);
+            Assert.AreEqual(_chocolateBubka, item.Key);
+            Assert.AreEqual(3, item.Value);
+        }
+
+        [Test]
+        public void GetItem_WhenItemDoesntExist_ReturnsNullWithZero()
+        {
+            var basket = new ShoppingBasket(new IDiscount[] { });
+            var item = basket.Add(_chocolateBubka, 3)
+                .GetItem(1234);
+            Assert.IsNull(item.Key);
+            Assert.AreEqual(0, item.Value);
+        }
     }
 }

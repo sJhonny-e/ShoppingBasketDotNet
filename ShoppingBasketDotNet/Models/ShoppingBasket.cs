@@ -30,6 +30,11 @@ namespace ShoppingBasketDotNet.Models
             return this;
         }
 
+        public KeyValuePair<Item,int> GetItem(int id)
+        {
+            return _items.FirstOrDefault(pair => pair.Key.Id == id);
+        }
+
         public double CalculateTotal()
         {
             var withoutDiscounts = _items.Select(pair => pair.Key.Price * pair.Value)
