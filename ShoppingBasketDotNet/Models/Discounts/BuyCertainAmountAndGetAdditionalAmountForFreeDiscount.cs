@@ -21,7 +21,15 @@ namespace ShoppingBasketDotNet.Models.Discounts
 
         public double GetDiscount(ShoppingBasket shoppingBasket)
         {
-            return 0.0;
+            var itemAndQuantity = shoppingBasket.GetItem(_itemId);
+            var numberOfItems = itemAndQuantity.Value;
+            if (numberOfItems <= _amountToBuy)
+                return 0.0; // not enough of the item was bought
+
+            var numberOfItemsFree = Math.Min(_amountFree, numberOfItems - _amountToBuy);
+            var item = itemAndQuantity.Key;
+
+            return item.Price * numberOfItemsFree;
         }
     }
 }
