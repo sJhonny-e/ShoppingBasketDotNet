@@ -9,9 +9,19 @@ namespace ShoppingBasketDotNet.Models.Discounts
 {
     public class BuyCertainAmountAndGetAdditionalAmountForFreeDiscount : IDiscount
     {
+        private int _itemId;
+        private int _amountToBuy;
+        private int _amountFree;
+        public BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(Item item, int amountToBuy, int amountFree)
+        {
+            _itemId = item.Id;
+            _amountFree = amountFree;
+            _amountToBuy = amountToBuy;
+        }
+
         public double GetDiscount(ShoppingBasket shoppingBasket)
         {
-            throw new NotImplementedException();
+            return 0.0;
         }
     }
 }
