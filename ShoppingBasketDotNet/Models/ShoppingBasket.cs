@@ -8,7 +8,7 @@ namespace ShoppingBasketDotNet.Models
 {
     public class ShoppingBasket
     {
-        public void Add(Item item, int quantity)
+        public ShoppingBasket Add(Item item, int quantity)
         {
 
         }
