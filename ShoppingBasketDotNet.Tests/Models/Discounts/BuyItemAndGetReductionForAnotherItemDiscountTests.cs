@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ShoppingBasketDotNet.Tests.Models.Discounts
 {
     [TestFixture]
-    public class DiscountsTests
+    public class BuyItemAndGetReductionForAnotherItemDiscountTests
     {
         private static Item _joojiFruits = new Item(1, "jooji fruits", 1.0);
         private static Item _popcorn = new Item(2, "popcorn", 2.5);
