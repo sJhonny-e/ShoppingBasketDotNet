@@ -43,5 +43,19 @@ namespace ShoppingBasketDotNet.Tests.Models
             discount1.Verify(d => d.GetDiscount(basket));
             discount2.Verify(d => d.GetDiscount(basket));
         }
+
+        [Test]
+        public void CalculateTotal_WithDiscounts_SubtractsDiscountsFromTotal()
+        {
+            var discount1 = new Mock<IDiscount>();
+            var discount2 = new Mock<IDiscount>();
+
+            var basket = new ShoppingBasket(new IDiscount[] { discount1.Object, discount2.Object });
+            discount1.Setup(d => d.GetDiscount(basket)).Returns(0.5);
+            discount2.Setup(d => d.GetDiscount(basket)).Returns(1.5);
+
+            var total = basket.Add(_cinnamonBubka, 10).CalculateTotal();
+            Assert.AreEqual(3.0, total); 
+        }
     }
 }
