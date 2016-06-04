@@ -35,7 +35,7 @@ namespace ShoppingBasketDotNet.Models
             var withoutDiscounts = _items.Select(pair => pair.Key.Price * pair.Value)
                 .Sum();
 
-            var discountTotal = 0;
+            var discountTotal = 0.0;
             foreach (var discount in _discounts)
             {
                 discountTotal += discount.GetDiscount(this);
