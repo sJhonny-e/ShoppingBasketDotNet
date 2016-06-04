@@ -30,10 +30,12 @@ namespace ShoppingBasketDotNet.Models.Discounts
                 return 0.0; // not enough of the qualifying item has been baught 
 
             var targetItemAndQuantity = shoppingBasket.GetItem(_targetItemId);
-            if (targetItemAndQuantity.Value <= 0)
+            var targetItem = targetItemAndQuantity.Key;
+            var targetQuantity = targetItemAndQuantity.Value;
+            if (targetQuantity <= 0)
                 return 0.0; // no target item was baught (suckers!)
 
-            return _discountPercentage * targetItemAndQuantity.Key.Price * Math.Min(timesToApplyDiscount, targetItemAndQuantity.Value);
+            return _discountPercentage * targetItem.Price * Math.Min(timesToApplyDiscount, targetQuantity);
         }
     }
 }
