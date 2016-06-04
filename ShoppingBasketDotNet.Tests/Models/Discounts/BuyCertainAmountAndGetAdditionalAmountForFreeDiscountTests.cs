@@ -14,13 +14,19 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
     public class BuyCertainAmountAndGetAdditionalAmountForFreeDiscountTests
     {
         private static Item _ohHenryBar = new Item(1, "Oh henry! bar", 2.5);
+        private BuyCertainAmountAndGetAdditionalAmountForFreeDiscount _discount;
+
+        [SetUp]
+        public void Setup()
+        {
+            _discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
+        }
 
         [Test]
         public void GetDiscount_ForEmptyBasket_Returns_0()
         {
             var basket = new Mock<ShoppingBasket>(null);
-            var discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
-            Assert.AreEqual(0, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(0, _discount.GetDiscount(basket.Object));
         }
 
         [Test]
@@ -29,9 +35,7 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             var basket = new Mock<ShoppingBasket>(null);
             basket.Setup(b => b.GetItem(_ohHenryBar.Id)).Returns(new KeyValuePair<Item, int>(_ohHenryBar, 5));
 
-            var discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
-
-            Assert.AreEqual(2 * _ohHenryBar.Price, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(2 * _ohHenryBar.Price, _discount.GetDiscount(basket.Object));
         }
 
         [Test]
@@ -40,9 +44,7 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             var basket = new Mock<ShoppingBasket>(null);
             basket.Setup(b => b.GetItem(_ohHenryBar.Id)).Returns(new KeyValuePair<Item, int>(_ohHenryBar, 4));
 
-            var discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
-
-            Assert.AreEqual(1 * _ohHenryBar.Price, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(1 * _ohHenryBar.Price, _discount.GetDiscount(basket.Object));
         }
 
         [Test]
@@ -51,9 +53,7 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             var basket = new Mock<ShoppingBasket>(null);
             basket.Setup(b => b.GetItem(_ohHenryBar.Id)).Returns(new KeyValuePair<Item, int>(_ohHenryBar, 9));
 
-            var discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
-
-            Assert.AreEqual(3 * _ohHenryBar.Price, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(3 * _ohHenryBar.Price, _discount.GetDiscount(basket.Object));
         }
 
         [Test]

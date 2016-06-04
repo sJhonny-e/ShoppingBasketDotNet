@@ -17,13 +17,19 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
         private static Item _joojiFruits = new Item(1, "jooji fruits", 1.0);
         private static Item _popcorn = new Item(2, "popcorn", 2.5);
 
+        private BuyItemAndGetReductionForAnotherItemDiscount _discount;
+
+        [SetUp]
+        public void Setup()
+        {
+            _discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
+        }
 
         [Test]
         public void GetDiscount_ForEmptyBasket_Returns_0()
         {
             var basket = new Mock<ShoppingBasket>(null);
-            var discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
-            Assert.AreEqual(0, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(0, _discount.GetDiscount(basket.Object));
         }
 
         [Test]
@@ -33,8 +39,7 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             basket.Setup(b => b.GetItem(_joojiFruits.Id)).Returns(new KeyValuePair<Item, int>(_joojiFruits, 4));
             basket.Setup(b => b.GetItem(_popcorn.Id)).Returns(new KeyValuePair<Item, int>(_popcorn, 3));
 
-            var discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
-            Assert.AreEqual(0.25 * 2.5, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(0.25 * 2.5, _discount.GetDiscount(basket.Object));
         }
 
         [Test]
@@ -44,8 +49,7 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             basket.Setup(b => b.GetItem(_joojiFruits.Id)).Returns(new KeyValuePair<Item, int>(_joojiFruits, 6));
             basket.Setup(b => b.GetItem(_popcorn.Id)).Returns(new KeyValuePair<Item, int>(_popcorn, 3));
 
-            var discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
-            Assert.AreEqual(2 * 0.25 * 2.5, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(2 * 0.25 * 2.5, _discount.GetDiscount(basket.Object));
         }
 
         [Test]
@@ -55,8 +59,7 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             basket.Setup(b => b.GetItem(_joojiFruits.Id)).Returns(new KeyValuePair<Item, int>(_joojiFruits, 2));
             basket.Setup(b => b.GetItem(_popcorn.Id)).Returns(new KeyValuePair<Item, int>(_popcorn, 3));
 
-            var discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
-            Assert.AreEqual(0.0, discount.GetDiscount(basket.Object));
+            Assert.AreEqual(0.0, _discount.GetDiscount(basket.Object));
         }
     }
 }
