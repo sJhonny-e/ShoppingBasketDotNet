@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using ShoppingBasketDotNet.Models;
+using ShoppingBasketDotNet.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace ShoppingBasketDotNet.Tests.Models
         [Test]
         public void CalculateTotal_WithoutAnyActiveDiscounts_ReturnsSumOfPrices()
         {
-            var basket = new ShoppingBasket();
+            var basket = new ShoppingBasket(new IDiscount[] { });
             var total = basket.Add(_chocolateBubka, 3)
                 .Add(_cinnamonBubka, 5)
                 .Add(_cinnamonBubka, 4)
@@ -26,5 +27,7 @@ namespace ShoppingBasketDotNet.Tests.Models
             Assert.AreEqual(7.5, total);
 
         }
+
+        
     }
 }

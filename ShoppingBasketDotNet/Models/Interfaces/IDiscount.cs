@@ -8,6 +8,6 @@ namespace ShoppingBasketDotNet.Models.Interfaces
 {
     public interface IDiscount
     {
-        ApplyDiscount(ShoppingBasket shoppingBasket);
+        int GetDiscount(ShoppingBasket shoppingBasket);
     }
 }

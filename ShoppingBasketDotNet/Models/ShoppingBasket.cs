@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingBasketDotNet.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,12 @@ namespace ShoppingBasketDotNet.Models
     public class ShoppingBasket
     {
         private Dictionary<Item, int> _items;
+        private IEnumerable<IDiscount> _discounts;
 
-        public ShoppingBasket()
+        public ShoppingBasket(IEnumerable<IDiscount> discounts)
         {
             _items = new Dictionary<Item, int>(ItemsComparer.Comparer);
+            _discounts = discounts;
         }
 
         public ShoppingBasket Add(Item item, int quantity)
@@ -33,7 +36,7 @@ namespace ShoppingBasketDotNet.Models
                 .Sum();
         }
 
-
+        // Making sure we only store one record per item
         private class ItemsComparer : IEqualityComparer<Item>
         {
             public static ItemsComparer Comparer = new ItemsComparer();
