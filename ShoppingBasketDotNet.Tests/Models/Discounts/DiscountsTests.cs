@@ -25,5 +25,13 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
             var discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
             Assert.AreEqual(0, discount.GetDiscount(basket.Object));
         }
+
+        [Test]
+        public void GetDiscount_ForABasketThatQualifies_AppliesDiscount()
+        {
+            var basket = new Mock<ShoppingBasket>(null);
+            var discount = new BuyItemAndGetReductionForAnotherItemDiscount(_joojiFruits, 3, _popcorn, 0.25);
+            Assert.AreEqual(0.25 * 2.5, discount.GetDiscount(basket.Object));
+        }
     }
 }
