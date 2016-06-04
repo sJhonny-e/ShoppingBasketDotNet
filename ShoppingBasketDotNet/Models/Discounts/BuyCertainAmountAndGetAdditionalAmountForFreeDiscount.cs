@@ -26,9 +26,17 @@ namespace ShoppingBasketDotNet.Models.Discounts
             if (numberOfItems <= _amountToBuy)
                 return 0.0; // not enough of the item was bought
 
-            var numberOfItemsFree = Math.Min(_amountFree, numberOfItems - _amountToBuy);
-            var item = itemAndQuantity.Key;
+            var numberOfItemsFree = 0;
 
+            numberOfItems -= _amountToBuy;
+            while (numberOfItems > 0)
+            {
+                var freeItems = Math.Min( _amountFree , numberOfItems);
+                numberOfItemsFree += freeItems;
+                numberOfItems -= _amountToBuy + freeItems;
+            }
+
+            var item = itemAndQuantity.Key;
             return item.Price * numberOfItemsFree;
         }
     }
