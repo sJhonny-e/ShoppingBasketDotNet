@@ -55,5 +55,27 @@ namespace ShoppingBasketDotNet.Tests.Models.Discounts
 
             Assert.AreEqual(3 * _ohHenryBar.Price, discount.GetDiscount(basket.Object));
         }
+
+        [Test]
+        public void GetDiscount_ForNonQualifyingBasket_DoesntApplyDiscount()
+        {
+            var basket = new Mock<ShoppingBasket>(null);
+            basket.Setup(b => b.GetItem(_ohHenryBar.Id)).Returns(new KeyValuePair<Item, int>(_ohHenryBar, 3));
+
+            var discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
+
+            Assert.AreEqual(0.0, discount.GetDiscount(basket.Object));
+        }
+
+        [Test]
+        public void GetDiscount_ForBasketQualifyingExactlyThreeTimes_AppliesDiscountExaclyThrice()
+        {
+            var basket = new Mock<ShoppingBasket>(null);
+            basket.Setup(b => b.GetItem(_ohHenryBar.Id)).Returns(new KeyValuePair<Item, int>(_ohHenryBar, 15));
+
+            var discount = new BuyCertainAmountAndGetAdditionalAmountForFreeDiscount(_ohHenryBar, 3, 2);
+
+            Assert.AreEqual(6 * _ohHenryBar.Price, discount.GetDiscount(basket.Object));
+        }
     }
 }

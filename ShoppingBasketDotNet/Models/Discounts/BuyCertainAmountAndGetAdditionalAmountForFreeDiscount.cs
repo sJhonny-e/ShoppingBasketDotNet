@@ -28,12 +28,14 @@ namespace ShoppingBasketDotNet.Models.Discounts
 
             var numberOfItemsFree = 0;
 
+            // iterating over the amount and counting the free items
             numberOfItems -= _amountToBuy;
             while (numberOfItems > 0)
             {
+                // still qualifying for free items; calculate how many free items for this iteration
                 var freeItems = Math.Min( _amountFree , numberOfItems);
                 numberOfItemsFree += freeItems;
-                numberOfItems -= _amountToBuy + freeItems;
+                numberOfItems -= _amountToBuy + freeItems;  // move to next iteration
             }
 
             var item = itemAndQuantity.Key;
