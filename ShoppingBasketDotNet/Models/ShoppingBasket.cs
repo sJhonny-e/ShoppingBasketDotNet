@@ -32,8 +32,16 @@ namespace ShoppingBasketDotNet.Models
 
         public double CalculateTotal()
         {
-            return _items.Select(pair => pair.Key.Price * pair.Value)
+            var withoutDiscounts = _items.Select(pair => pair.Key.Price * pair.Value)
                 .Sum();
+
+            var discountTotal = 0;
+            foreach (var discount in _discounts)
+            {
+                discountTotal += discount.GetDiscount(this);
+            }
+
+            return withoutDiscounts - discountTotal;
         }
 
         // Making sure we only store one record per item

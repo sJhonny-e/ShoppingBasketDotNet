@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using ShoppingBasketDotNet.Models;
 using ShoppingBasketDotNet.Models.Interfaces;
 using System;
@@ -28,6 +29,19 @@ namespace ShoppingBasketDotNet.Tests.Models
 
         }
 
-        
+        [Test]
+        public void CalculateTotal_WithDiscounts_CallsAllDiscountVisitors()
+        {
+            var discount1 = new Mock<IDiscount>();
+            var discount2 = new Mock<IDiscount>();
+
+            var basket = new ShoppingBasket(new IDiscount[] { discount1.Object, discount2.Object });
+
+            basket.Add(_chocolateBubka, 3)
+                .CalculateTotal();
+
+            discount1.Verify(d => d.GetDiscount(basket));
+            discount2.Verify(d => d.GetDiscount(basket));
+        }
     }
 }
