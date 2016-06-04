@@ -1,6 +1,7 @@
 # .net stuff
 bin
 obj
+packages
 
 
 # Windows image file caches
