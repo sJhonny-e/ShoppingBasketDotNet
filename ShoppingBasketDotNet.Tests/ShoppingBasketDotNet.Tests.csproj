@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntegrationTests\SampleIntegrationTests.cs" />
     <Compile Include="Models\Discounts\BuyCertainAmountAndGetAdditionalAmountForFreeDiscountTests.cs" />
     <Compile Include="Models\Discounts\BuyItemAndGetReductionForAnotherItemDiscountTests.cs" />
     <Compile Include="Models\ShoppingBasketTests.cs" />
