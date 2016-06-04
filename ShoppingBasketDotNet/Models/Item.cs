@@ -10,9 +10,9 @@ namespace ShoppingBasketDotNet.Models
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public decimal Price { get; private set; }
+        public double Price { get; private set; }
 
-        public Item(int id, string name, decimal price)
+        public Item(int id, string name, double price)
         {
             Id = id;
             Name = name;

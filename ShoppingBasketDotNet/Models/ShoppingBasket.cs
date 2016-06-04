@@ -8,14 +8,51 @@ namespace ShoppingBasketDotNet.Models
 {
     public class ShoppingBasket
     {
-        public ShoppingBasket Add(Item item, int quantity)
-        {
+        private Dictionary<Item, int> _items;
 
+        public ShoppingBasket()
+        {
+            _items = new Dictionary<Item, int>(ItemsComparer.Comparer);
         }
 
-        public decimal CalculateTotal()
+        public ShoppingBasket Add(Item item, int quantity)
         {
-            throw new NotImplementedException();
+            if (!_items.ContainsKey(item))
+            {
+                _items.Add(item, 0);
+            }
+
+            _items[item] += quantity;
+
+            return this;
+        }
+
+        public double CalculateTotal()
+        {
+            return _items.Select(pair => pair.Key.Price * pair.Value)
+                .Sum();
+        }
+
+
+        private class ItemsComparer : IEqualityComparer<Item>
+        {
+            public static ItemsComparer Comparer = new ItemsComparer();
+
+            public bool Equals(Item x, Item y)
+            {
+                if (x == null && y == null)
+                    return true;
+
+                if (x == null || y == null)
+                    return false;
+
+                return x.Id == y.Id;
+            }
+
+            public int GetHashCode(Item obj)
+            {
+                return obj.Id.GetHashCode();
+            }
         }
     }
 }
