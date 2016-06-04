@@ -68,7 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Discounts\DiscountsTests.cs" />
+    <Compile Include="Models\Discounts\BuyItemAndGetReductionForAnotherItemDiscountTests.cs" />
     <Compile Include="Models\ShoppingBasketTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
